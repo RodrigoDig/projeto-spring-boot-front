@@ -1,0 +1,68 @@
+.body-modal{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.modal{
+    background: #008b8b;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+              rgba(0, 0, 0, 0.12) 0px -12px 30px,
+              rgba(0, 0, 0, 0.12) 0px 4px 6px,
+              rgba(0, 0, 0, 0.17) 0px 12px 13px,
+              rgba(0, 0, 0, 0.09) 0px -3px 5px;         
+    text-align: center;
+    min-width: 400px;
+
+    h3{
+        position: relative;
+        top: 10px;
+        color: white;
+    }
+}
+
+.modal-buttons{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.button-style{
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.yesBtn{
+    padding: 8px 20px;
+    background-color: #fff;
+    color: #008b8b;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+    
+
+}
+.noBtn{
+    padding: 8px 20px;
+    background-color: #fff;
+    color: #008b8b;
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
+.yesBtn:hover, .noBtn:hover{
+    color: white;
+    background-color: #005f5f;
+    border: 1px solid white;
+}

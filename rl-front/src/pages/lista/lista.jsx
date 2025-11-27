@@ -4,9 +4,14 @@ import "./lista.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "../../connection/apiService";
+import { toast } from "react-toastify";
+import Modal from "../../components/modal/modal";
 
 export default function Lista() {
   const [produtos, setProdutos] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [produtoToDelete, setProdutoToDelete] = useState(null);
+
   const navigate = useNavigate();
 
   async function fetchProducts() {
@@ -18,11 +23,41 @@ export default function Lista() {
     }
   }
   useEffect(() => { 
-    fetchProducts([]);
+    fetchProducts();
   }, []);
+
+  function openModal(product){
+    setProdutoToDelete(product);
+    setModalOpen(true); 
+  }
+
+  async function confirmDelete(){
+    try{
+      await ApiService.product.deleteProduct(produtoToDelete);
+
+      toast.success("Produto excluído com sucesso!");
+
+      fetchProducts();
+
+      setModalOpen(false);
+    } catch (error){
+      toast.error("Erro ao excluir produto.");
+      console.error("Erro ao excluir produto:", error);
+    }
+  }
+
+
+
 
   return (
     <article className="topo-lista">
+
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        OnConfirm={confirmDelete}
+      />
+
       <div className="lista-container">
         <h1 className="titulo-lista">Lista de Produtos</h1>
 
@@ -31,7 +66,7 @@ export default function Lista() {
             <tr>
               <th>ID</th>
               <th>Nome</th>
-              <th>Marca</th>
+              <th>Fabricante</th>
               <th>Preço</th>
               <th>Estoque</th>
               <th>Descrição</th>
@@ -57,16 +92,15 @@ export default function Lista() {
                   <Link to={`/editar/${p.id}`}>
                     <button className="btn-alterar">Alterar</button>    
                   </Link>
-                  <button className="btn-excluir">Excluir</button>
+                  <button className="btn-excluir" onClick={() => openModal(p)}>Excluir</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         
-        <Link to="/" style={{textDecoration: "none"}}>
-            <button className="add-produto-btn">Incluir novo produto</button>
-        </Link>
+        <button onClick={() => navigate("/cadastro")} className="add-produto-btn">Incluir novo produto</button>
+
       </div>
       <Footer />
     </article>
